@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Dice Game</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<h1>Let's Play</h1>
+	
+	<div class="dice">
+		<p id="player1Label">Player 1</p>
+		<img src="images/dice1.png" id="check1" >
+	</div>
+	<div class="dice">
+		<p id="player2Label">Player 2</p>
+		<img src="images/dice6.png" id="check2">
+	</div>
+	<div class="dice">
+		<p id="player3Label">Player 3</p>
+		<img src="images/dice3.png" id="check3">
+	</div>
+	<div>
+		<button onclick="dicegame()">Roll the dice</button>
+		<button onclick="editPlayerNames()">Edit Player Names</button>
+	</div>
+	
+</div>
+<script>
+
+let playerNames = ["Player 1", "Player 2", "Player 3"];
+
+function dicegame() {
+	const play1 = Math.floor(Math.random() * 6) + 1;
+	const play2 = Math.floor(Math.random() * 6) + 1;
+	const play3 = Math.floor(Math.random() * 6) + 1;
+
+	const play1dice = `images/dice${play1}.png`;
+	const play2dice = `images/dice${play2}.png`;
+	const play3dice = `images/dice${play3}.png`;
+
+	document.getElementById('check1').setAttribute('src', play1dice);
+	document.getElementById('check2').setAttribute('src', play2dice);
+	document.getElementById('check3').setAttribute('src', play3dice);
+
+	if (play1 === play2 && play1 === play3) {
+		document.querySelector('h1').innerHTML = "It's a draw - All players have the same result";
+	} else if ((play1 === play2) || (play1 === play3) || (play2 === play3)) {
+		document.querySelector('h1').innerHTML = "Draw - Two players have the same result";
+	} else if (play1 > play2 && play1 > play3) {
+		document.querySelector('h1').innerHTML = `${playerNames[0]} won :)`;
+	} else if (play2 > play1 && play2 > play3) {
+		document.querySelector('h1').innerHTML = `${playerNames[1]} won :)`;
+	} else if (play3 > play1 && play3 > play2) {
+		document.querySelector('h1').innerHTML = `${playerNames[2]} won :)`;
+	} 
+}
+
+function editPlayerNames() {
+	for (let i = 0; i < playerNames.length; i++) {
+		const newName = prompt(`Enter name for Player ${i + 1}`, playerNames[i]);
+		if (newName) {
+			playerNames[i] = newName;
+			document.getElementById(`player${i + 1}Label`).innerHTML = newName;
+		}
+	}
+}
+</script>
+</body>
+</html>
